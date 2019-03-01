@@ -1,6 +1,13 @@
 ### Before clone this toolchains, you will need to install Git LFS on ur env
 ---------------------------
+#### Ubuntu 18.04
 ```
+$ sudo apt install git-lfs
+```
+#### Ubuntu 16.04
+```
+$ sudo apt install software-properties-common
+$ curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash 
 $ sudo apt install git-lfs
 ```
 ---------------------------
