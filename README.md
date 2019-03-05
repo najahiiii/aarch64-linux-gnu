@@ -23,5 +23,6 @@ $ sudo apt install git-lfs
 | 01/03/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190301](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190301) | 
 | 01/03/2019 | ARM64 | GNU (GCC) | 4.9.4 | [GCC 4.9.4 - 20190301](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc4.9.4-20190301) | 
 | 04/03/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190304](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190304) | 
+| 05/03/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190305](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190305) | 
 --------------------------- 
 
