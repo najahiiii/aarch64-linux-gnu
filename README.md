@@ -2,13 +2,13 @@
 ---------------------------
 #### Ubuntu 18.04
 ```
-$ sudo apt install git-lfs
+sudo apt install git-lfs
 ```
 #### Ubuntu 16.04
 ```
-$ sudo apt install software-properties-common
-$ curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash 
-$ sudo apt install git-lfs
+sudo apt install software-properties-common
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash 
+sudo apt install git-lfs
 ```
 ---------------------------
 | Date | Arch | Variant | Version | Link |
