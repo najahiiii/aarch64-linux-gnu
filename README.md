@@ -1,33 +1,27 @@
 ### Before clone this toolchains, you will need to install Git LFS on ur env
 ---------------------------
 #### Ubuntu 18.04
-```
+```bash
 sudo apt install git-lfs
 ```
 #### Ubuntu 16.04
-```
+```bash
 sudo apt install software-properties-common
 curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash 
 sudo apt install git-lfs
 ```
 ---------------------------
-| Date | Arch | Variant | Version | Link |
-| :-: | :-: | :-: | :-: | :-: |
-| 15/02/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190215](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190215) |
-| 16/02/2019 | ARM64 | LINARO (GCC) | 8.2.1 | [LINARO 8.2.1 - 20190216](https://github.com/najahiiii/aarch64-linux-gnu/tree/linaro8-20190216) |
-| 19/02/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190219](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190219) |
-| 22/02/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190222](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190222) | 
-| 23/02/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190223](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190223) |
-| 26/02/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190226](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190226) |
-| 27/02/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190227](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190227) | 
-| 01/03/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190301](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190301) | 
-| 01/03/2019 | ARM64 | GNU (GCC) | 4.9.4 | [GCC 4.9.4 - 20190301](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc4.9.4-20190301) | 
-| 04/03/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190304](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190304) | 
-| 05/03/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190305](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190305) | 
-| 08/03/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190308](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190308) | 
-| 11/03/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190311](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190311) | 
-| 14/03/2019 | ARM64 | GNU (GCC) | 5.5.0 | [GCC 5.5.0 - 20190314](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc5-20190314) | 
-| 16/03/2019 | ARM64 | LINARO (GCC) | 5.5.0 | [LINARO 5.5.0 - 20190316](https://github.com/najahiiii/aarch64-linux-gnu/tree/linaro5-20190316) |
-| 16/03/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190316](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190316) |
-| 01/04/2019 | ARM64 | GNU (GCC) | 9.0.1 | [GCC 9.0.1 - 20190401](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190401) |
----------------------------
+#### LINARO GCC
+
+| Date | Variant | Arch | Version | Repo Link | Clone |
+| :-: | :-: | :-: | :-: | :-: | - |
+| 16/03/2019 | LINARO (GCC) | ARM64 | 5.5.0 | [LINARO 5.5.0 - 20190316](https://github.com/najahiiii/aarch64-linux-gnu/tree/linaro5-20190316) | `git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b linaro5-20190316` |
+| 16/02/2019 | LINARO (GCC) | ARM64 | 8.2.1 | [LINARO 8.2.1 - 20190216](https://github.com/najahiiii/aarch64-linux-gnu/tree/linaro8-20190216) | `git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b linaro8-20190216` |
+
+#### GNU GCC
+
+| Date | Variant | Arch | Version | Repo Link | Clone |
+| :-: | :-: | :-: | :-: | :-: | - |
+| 01/03/2019 | GNU (GCC) | ARM64 | 4.9.4 | [GCC 4.9.4 - 20190301](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc4.9.4-20190301) | `git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc4.9.4-20190301` |
+| 14/03/2019 | GNU (GCC) | ARM64 | 5.5.0 | [GCC 5.5.0 - 20190314](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc5-20190314) | `git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc5-20190314` |
+| 01/04/2019 | GNU (GCC) | ARM64 | 9.0.1 | [GCC 9.0.1 - 20190401](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190401) | `git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc9-20190401` |
