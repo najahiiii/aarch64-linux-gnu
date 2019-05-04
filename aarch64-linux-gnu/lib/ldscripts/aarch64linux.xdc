@@ -7,7 +7,7 @@ OUTPUT_FORMAT("elf64-littleaarch64", "elf64-bigaarch64",
 	      "elf64-littleaarch64")
 OUTPUT_ARCH(aarch64)
 ENTRY(_start)
-SEARCH_DIR("/home/najahi/build/aarch64-linux-gnu/aarch64-linux-gnu/lib64"); SEARCH_DIR("/home/najahi/build/aarch64-linux-gnu/aarch64-linux-gnu/lib");
+SEARCH_DIR("/home/najahi/build-tools/aarch64-linux-gnu/aarch64-linux-gnu/lib64"); SEARCH_DIR("/home/najahi/build-tools/aarch64-linux-gnu/aarch64-linux-gnu/lib");
 SECTIONS
 {
   /* Read-only sections, merged into text segment: */
@@ -39,9 +39,7 @@ SECTIONS
   .rela.plt       :
     {
       *(.rela.plt)
-      PROVIDE_HIDDEN (__rela_iplt_start = .);
       *(.rela.iplt)
-      PROVIDE_HIDDEN (__rela_iplt_end = .);
     }
   .init           :
   {

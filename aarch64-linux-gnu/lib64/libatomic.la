@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/najahi/build/aarch64-linux-gnu/aarch64-linux-gnu/lib/../lib64'
+libdir='/home/najahi/build-tools/aarch64-linux-gnu/aarch64-linux-gnu/lib/../lib64'

@@ -24,9 +24,9 @@
 
 # We should be able to find the translation right at the beginning.
 TEXTDOMAIN=libc
-TEXTDOMAINDIR=/home/najahi/build/aarch64-linux-gnu/aarch64-linux-gnu/share/locale
+TEXTDOMAINDIR=/home/najahi/build-tools/aarch64-linux-gnu/aarch64-linux-gnu/share/locale
 
-RTLDLIST=/home/najahi/build/aarch64-linux-gnu/aarch64-linux-gnu/lib/ld-linux-aarch64.so.1
+RTLDLIST=/home/najahi/build-tools/aarch64-linux-gnu/aarch64-linux-gnu/lib/ld-linux-aarch64.so.1
 warn=
 bind_now=
 verbose=

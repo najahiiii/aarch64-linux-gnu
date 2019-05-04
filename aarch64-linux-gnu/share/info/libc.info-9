@@ -1939,6 +1939,7 @@ START-INFO-DIR-ENTRY
 * ttyname: (libc)Is It a Terminal.
 * ttyname_r: (libc)Is It a Terminal.
 * twalk: (libc)Tree Search Function.
+* twalk_r: (libc)Tree Search Function.
 * tzset: (libc)Time Zone Functions.
 * ufromfp: (libc)Rounding Functions.
 * ufromfpf: (libc)Rounding Functions.
@@ -7070,7 +7071,7 @@ strings.  These functions are declared in the header file ‘time.h’.
           If the ‘E’ modifier is specified (‘%EY’), instead produces a
           complete representation of the year according to the locale’s
           alternative calendar.  Generally this will be some combination
-          of the information produced by ‘%EC’ and ‘Ey’.  As a GNU
+          of the information produced by ‘%EC’ and ‘%Ey’.  As a GNU
           extension, the formatting flags ‘_’ or ‘-’ may be used with
           this conversion specifier; they affect how the year number is
           printed.

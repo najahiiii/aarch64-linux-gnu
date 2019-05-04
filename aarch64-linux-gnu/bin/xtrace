@@ -17,8 +17,8 @@
 # License along with the GNU C Library; if not, see
 # <http://www.gnu.org/licenses/>.
 
-pcprofileso='/home/najahi/build/aarch64-linux-gnu/aarch64-linux-gnu/\$LIB/libpcprofile.so'
-pcprofiledump='/home/najahi/build/aarch64-linux-gnu/aarch64-linux-gnu/bin/pcprofiledump'
+pcprofileso='/home/najahi/build-tools/aarch64-linux-gnu/aarch64-linux-gnu/\$LIB/libpcprofile.so'
+pcprofiledump='/home/najahi/build-tools/aarch64-linux-gnu/aarch64-linux-gnu/bin/pcprofiledump'
 TEXTDOMAIN=libc
 
 # Print usage message.

@@ -1939,6 +1939,7 @@ START-INFO-DIR-ENTRY
 * ttyname: (libc)Is It a Terminal.
 * ttyname_r: (libc)Is It a Terminal.
 * twalk: (libc)Tree Search Function.
+* twalk_r: (libc)Tree Search Function.
 * tzset: (libc)Time Zone Functions.
 * ufromfp: (libc)Rounding Functions.
 * ufromfpf: (libc)Rounding Functions.
@@ -2074,6 +2075,87 @@ START-INFO-DIR-ENTRY
 * ynfNx: (libc)Special Functions.
 * ynl: (libc)Special Functions.
 END-INFO-DIR-ENTRY
+
+
+File: libc.info,  Node: Foreground and Background,  Next: Stopped and Terminated Jobs,  Prev: Launching Jobs,  Up: Implementing a Shell
+
+28.5.4 Foreground and Background
+--------------------------------
+
+Now let’s consider what actions must be taken by the shell when it
+launches a job into the foreground, and how this differs from what must
+be done when a background job is launched.
+
+   When a foreground job is launched, the shell must first give it
+access to the controlling terminal by calling ‘tcsetpgrp’.  Then, the
+shell should wait for processes in that process group to terminate or
+stop.  This is discussed in more detail in *note Stopped and Terminated
+Jobs::.
+
+   When all of the processes in the group have either completed or
+stopped, the shell should regain control of the terminal for its own
+process group by calling ‘tcsetpgrp’ again.  Since stop signals caused
+by I/O from a background process or a SUSP character typed by the user
+are sent to the process group, normally all the processes in the job
+stop together.
+
+   The foreground job may have left the terminal in a strange state, so
+the shell should restore its own saved terminal modes before continuing.
+In case the job is merely stopped, the shell should first save the
+current terminal modes so that it can restore them later if the job is
+continued.  The functions for dealing with terminal modes are
+‘tcgetattr’ and ‘tcsetattr’; these are described in *note Terminal
+Modes::.
+
+   Here is the sample shell’s function for doing all of this.
+
+     /* Put job J in the foreground.  If CONT is nonzero,
+        restore the saved terminal modes and send the process group a
+        ‘SIGCONT’ signal to wake it up before we block.  */
+
+     void
+     put_job_in_foreground (job *j, int cont)
+     {
+       /* Put the job into the foreground.  */
+       tcsetpgrp (shell_terminal, j->pgid);
+
+       /* Send the job a continue signal, if necessary.  */
+       if (cont)
+         {
+           tcsetattr (shell_terminal, TCSADRAIN, &j->tmodes);
+           if (kill (- j->pgid, SIGCONT) < 0)
+             perror ("kill (SIGCONT)");
+         }
+
+       /* Wait for it to report.  */
+       wait_for_job (j);
+
+       /* Put the shell back in the foreground.  */
+       tcsetpgrp (shell_terminal, shell_pgid);
+
+       /* Restore the shell’s terminal modes.  */
+       tcgetattr (shell_terminal, &j->tmodes);
+       tcsetattr (shell_terminal, TCSADRAIN, &shell_tmodes);
+     }
+
+   If the process group is launched as a background job, the shell
+should remain in the foreground itself and continue to read commands
+from the terminal.
+
+   In the sample shell, there is not much that needs to be done to put a
+job into the background.  Here is the function it uses:
+
+     /* Put a job in the background.  If the cont argument is true, send
+        the process group a ‘SIGCONT’ signal to wake it up.  */
+
+     void
+     put_job_in_background (job *j, int cont)
+     {
+       /* Send the job a continue signal, if necessary.  */
+       if (cont)
+         if (kill (-j->pgid, SIGCONT) < 0)
+           perror ("kill (SIGCONT)");
+     }
 
 
 File: libc.info,  Node: Stopped and Terminated Jobs,  Next: Continuing Stopped Jobs,  Prev: Foreground and Background,  Up: Implementing a Shell
@@ -7577,88 +7659,4 @@ system you are using can go that far.
      The value of this macro is the most restrictive limit permitted by
      POSIX for the numbers used in the ‘\{MIN,MAX\}’ construct in a
      regular expression.  Its value is ‘255’.
-
-
-File: libc.info,  Node: Limits for Files,  Next: Options for Files,  Prev: Minimums,  Up: System Configuration
-
-32.6 Limits on File System Capacity
-===================================
-
-The POSIX.1 standard specifies a number of parameters that describe the
-limitations of the file system.  It’s possible for the system to have a
-fixed, uniform limit for a parameter, but this isn’t the usual case.  On
-most systems, it’s possible for different file systems (and, for some
-parameters, even different files) to have different maximum limits.  For
-example, this is very likely if you use NFS to mount some of the file
-systems from other machines.
-
-   Each of the following macros is defined in ‘limits.h’ only if the
-system has a fixed, uniform limit for the parameter in question.  If the
-system allows different file systems or files to have different limits,
-then the macro is undefined; use ‘pathconf’ or ‘fpathconf’ to find out
-the limit that applies to a particular file.  *Note Pathconf::.
-
-   Each parameter also has another macro, with a name starting with
-‘_POSIX’, which gives the lowest value that the limit is allowed to have
-on _any_ POSIX system.  *Note File Minimums::.
-
- -- Macro: int LINK_MAX
-
-     The uniform system limit (if any) for the number of names for a
-     given file.  *Note Hard Links::.
-
- -- Macro: int MAX_CANON
-
-     The uniform system limit (if any) for the amount of text in a line
-     of input when input editing is enabled.  *Note Canonical or Not::.
-
- -- Macro: int MAX_INPUT
-
-     The uniform system limit (if any) for the total number of
-     characters typed ahead as input.  *Note I/O Queues::.
-
- -- Macro: int NAME_MAX
-
-     The uniform system limit (if any) for the length of a file name
-     component, not including the terminating null character.
-
-     *Portability Note:* On some systems, the GNU C Library defines
-     ‘NAME_MAX’, but does not actually enforce this limit.
-
- -- Macro: int PATH_MAX
-
-     The uniform system limit (if any) for the length of an entire file
-     name (that is, the argument given to system calls such as ‘open’),
-     including the terminating null character.
-
-     *Portability Note:* The GNU C Library does not enforce this limit
-     even if ‘PATH_MAX’ is defined.
-
- -- Macro: int PIPE_BUF
-
-     The uniform system limit (if any) for the number of bytes that can
-     be written atomically to a pipe.  If multiple processes are writing
-     to the same pipe simultaneously, output from different processes
-     might be interleaved in chunks of this size.  *Note Pipes and
-     FIFOs::.
-
-   These are alternative macro names for some of the same information.
-
- -- Macro: int MAXNAMLEN
-
-     This is the BSD name for ‘NAME_MAX’.  It is defined in ‘dirent.h’.
-
- -- Macro: int FILENAME_MAX
-
-     The value of this macro is an integer constant expression that
-     represents the maximum length of a file name string.  It is defined
-     in ‘stdio.h’.
-
-     Unlike ‘PATH_MAX’, this macro is defined even if there is no actual
-     limit imposed.  In such a case, its value is typically a very large
-     number.  *This is always the case on GNU/Hurd systems.*
-
-     *Usage Note:* Don’t use ‘FILENAME_MAX’ as the size of an array in
-     which to store a file name!  You can’t possibly make an array that
-     big!  Use dynamic allocation (*note Memory Allocation::) instead.
 

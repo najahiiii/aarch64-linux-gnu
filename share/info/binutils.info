@@ -2986,7 +2986,8 @@ modified copies under different names.
 '--no-merge-notes'
      For ELF files, attempt (or do not attempt) to reduce the size of
      any SHT_NOTE type sections by removing duplicate notes.  The
-     default is to attempt this reduction.
+     default is to attempt this reduction unless stripping debug or DWO
+     information.
 
 '-N SYMBOLNAME'
 '--strip-symbol=SYMBOLNAME'
@@ -5380,8 +5381,8 @@ Binutils Index
 * -enable-deterministic-archives <3>:    objcopy.             (line 358)
 * -enable-deterministic-archives <4>:    ranlib.              (line  32)
 * -enable-deterministic-archives <5>:    ranlib.              (line  44)
-* -enable-deterministic-archives <6>:    strip.               (line 149)
-* -enable-deterministic-archives <7>:    strip.               (line 159)
+* -enable-deterministic-archives <6>:    strip.               (line 150)
+* -enable-deterministic-archives <7>:    strip.               (line 160)
 * .stab:                                 objdump.             (line 650)
 * Add prefix to absolute paths:          objdump.             (line 486)
 * addr2line:                             addr2line.           (line   6)
@@ -5427,8 +5428,8 @@ Binutils Index
 * deterministic archives <3>:            objcopy.             (line 358)
 * deterministic archives <4>:            ranlib.              (line  32)
 * deterministic archives <5>:            ranlib.              (line  44)
-* deterministic archives <6>:            strip.               (line 149)
-* deterministic archives <7>:            strip.               (line 159)
+* deterministic archives <6>:            strip.               (line 150)
+* deterministic archives <7>:            strip.               (line 160)
 * disassembling object code:             objdump.             (line 139)
 * disassembly architecture:              objdump.             (line 246)
 * disassembly endianness:                objdump.             (line 181)
@@ -5562,23 +5563,23 @@ Node: ranlib107021
 Node: size108620
 Node: strings112596
 Node: strip116968
-Node: c++filt126274
-Ref: c++filt-Footnote-1132136
-Node: addr2line132242
-Node: windmc137921
-Node: windres141580
-Node: dlltool147939
-Node: def file format160936
-Node: readelf163466
-Node: elfedit175123
-Node: Common Options178079
-Node: Selecting the Target System179113
-Node: Target Selection180045
-Node: Architecture Selection182026
-Node: Reporting Bugs182854
-Node: Bug Criteria183633
-Node: Bug Reporting184186
-Node: GNU Free Documentation License191056
-Node: Binutils Index216216
+Node: c++filt126321
+Ref: c++filt-Footnote-1132183
+Node: addr2line132289
+Node: windmc137968
+Node: windres141627
+Node: dlltool147986
+Node: def file format160983
+Node: readelf163513
+Node: elfedit175170
+Node: Common Options178126
+Node: Selecting the Target System179160
+Node: Target Selection180092
+Node: Architecture Selection182073
+Node: Reporting Bugs182901
+Node: Bug Criteria183680
+Node: Bug Reporting184233
+Node: GNU Free Documentation License191103
+Node: Binutils Index216263
 
 End Tag Table

@@ -1939,6 +1939,7 @@ START-INFO-DIR-ENTRY
 * ttyname: (libc)Is It a Terminal.
 * ttyname_r: (libc)Is It a Terminal.
 * twalk: (libc)Tree Search Function.
+* twalk_r: (libc)Tree Search Function.
 * tzset: (libc)Time Zone Functions.
 * ufromfp: (libc)Rounding Functions.
 * ufromfpf: (libc)Rounding Functions.
@@ -2074,6 +2075,40 @@ START-INFO-DIR-ENTRY
 * ynfNx: (libc)Special Functions.
 * ynl: (libc)Special Functions.
 END-INFO-DIR-ENTRY
+
+
+File: libc.info,  Node: Permission for kill,  Next: Kill Example,  Prev: Signaling Another Process,  Up: Generating Signals
+
+24.6.3 Permission for using ‘kill’
+----------------------------------
+
+There are restrictions that prevent you from using ‘kill’ to send
+signals to any random process.  These are intended to prevent antisocial
+behavior such as arbitrarily killing off processes belonging to another
+user.  In typical use, ‘kill’ is used to pass signals between parent,
+child, and sibling processes, and in these situations you normally do
+have permission to send signals.  The only common exception is when you
+run a setuid program in a child process; if the program changes its real
+UID as well as its effective UID, you may not have permission to send a
+signal.  The ‘su’ program does this.
+
+   Whether a process has permission to send a signal to another process
+is determined by the user IDs of the two processes.  This concept is
+discussed in detail in *note Process Persona::.
+
+   Generally, for a process to be able to send a signal to another
+process, either the sending process must belong to a privileged user
+(like ‘root’), or the real or effective user ID of the sending process
+must match the real or effective user ID of the receiving process.  If
+the receiving process has changed its effective user ID from the
+set-user-ID mode bit on its process image file, then the owner of the
+process image file is used in place of its current effective user ID. In
+some implementations, a parent process might be able to send signals to
+a child process even if the user ID’s don’t match, and other
+implementations might enforce other restrictions.
+
+   The ‘SIGCONT’ signal is a special case.  It can be sent if the sender
+is part of the same session as the receiver, regardless of user IDs.
 
 
 File: libc.info,  Node: Kill Example,  Prev: Permission for kill,  Up: Generating Signals
@@ -7522,86 +7557,5 @@ background; these are discussed in *note Foreground and Background::.
          put_job_in_foreground (j, 0);
        else
          put_job_in_background (j, 0);
-     }
-
-
-File: libc.info,  Node: Foreground and Background,  Next: Stopped and Terminated Jobs,  Prev: Launching Jobs,  Up: Implementing a Shell
-
-28.5.4 Foreground and Background
---------------------------------
-
-Now let’s consider what actions must be taken by the shell when it
-launches a job into the foreground, and how this differs from what must
-be done when a background job is launched.
-
-   When a foreground job is launched, the shell must first give it
-access to the controlling terminal by calling ‘tcsetpgrp’.  Then, the
-shell should wait for processes in that process group to terminate or
-stop.  This is discussed in more detail in *note Stopped and Terminated
-Jobs::.
-
-   When all of the processes in the group have either completed or
-stopped, the shell should regain control of the terminal for its own
-process group by calling ‘tcsetpgrp’ again.  Since stop signals caused
-by I/O from a background process or a SUSP character typed by the user
-are sent to the process group, normally all the processes in the job
-stop together.
-
-   The foreground job may have left the terminal in a strange state, so
-the shell should restore its own saved terminal modes before continuing.
-In case the job is merely stopped, the shell should first save the
-current terminal modes so that it can restore them later if the job is
-continued.  The functions for dealing with terminal modes are
-‘tcgetattr’ and ‘tcsetattr’; these are described in *note Terminal
-Modes::.
-
-   Here is the sample shell’s function for doing all of this.
-
-     /* Put job J in the foreground.  If CONT is nonzero,
-        restore the saved terminal modes and send the process group a
-        ‘SIGCONT’ signal to wake it up before we block.  */
-
-     void
-     put_job_in_foreground (job *j, int cont)
-     {
-       /* Put the job into the foreground.  */
-       tcsetpgrp (shell_terminal, j->pgid);
-
-       /* Send the job a continue signal, if necessary.  */
-       if (cont)
-         {
-           tcsetattr (shell_terminal, TCSADRAIN, &j->tmodes);
-           if (kill (- j->pgid, SIGCONT) < 0)
-             perror ("kill (SIGCONT)");
-         }
-
-       /* Wait for it to report.  */
-       wait_for_job (j);
-
-       /* Put the shell back in the foreground.  */
-       tcsetpgrp (shell_terminal, shell_pgid);
-
-       /* Restore the shell’s terminal modes.  */
-       tcgetattr (shell_terminal, &j->tmodes);
-       tcsetattr (shell_terminal, TCSADRAIN, &shell_tmodes);
-     }
-
-   If the process group is launched as a background job, the shell
-should remain in the foreground itself and continue to read commands
-from the terminal.
-
-   In the sample shell, there is not much that needs to be done to put a
-job into the background.  Here is the function it uses:
-
-     /* Put a job in the background.  If the cont argument is true, send
-        the process group a ‘SIGCONT’ signal to wake it up.  */
-
-     void
-     put_job_in_background (job *j, int cont)
-     {
-       /* Send the job a continue signal, if necessary.  */
-       if (cont)
-         if (kill (-j->pgid, SIGCONT) < 0)
-           perror ("kill (SIGCONT)");
      }
 

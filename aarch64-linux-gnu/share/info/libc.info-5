@@ -1939,6 +1939,7 @@ START-INFO-DIR-ENTRY
 * ttyname: (libc)Is It a Terminal.
 * ttyname_r: (libc)Is It a Terminal.
 * twalk: (libc)Tree Search Function.
+* twalk_r: (libc)Tree Search Function.
 * tzset: (libc)Time Zone Functions.
 * ufromfp: (libc)Rounding Functions.
 * ufromfpf: (libc)Rounding Functions.
@@ -7215,41 +7216,4 @@ file that doesn’t support random access.  Thus, channels for reading or
 writing such files are always linked, never independent.  Append-type
 channels are also always linked.  For these channels, follow the rules
 for linked channels; see *note Linked Channels::.
-
-
-File: libc.info,  Node: Cleaning Streams,  Prev: Independent Channels,  Up: Stream/Descriptor Precautions
-
-13.5.3 Cleaning Streams
------------------------
-
-You can use ‘fflush’ to clean a stream in most cases.
-
-   You can skip the ‘fflush’ if you know the stream is already clean.  A
-stream is clean whenever its buffer is empty.  For example, an
-unbuffered stream is always clean.  An input stream that is at
-end-of-file is clean.  A line-buffered stream is clean when the last
-character output was a newline.  However, a just-opened input stream
-might not be clean, as its input buffer might not be empty.
-
-   There is one case in which cleaning a stream is impossible on most
-systems.  This is when the stream is doing input from a file that is not
-random-access.  Such streams typically read ahead, and when the file is
-not random access, there is no way to give back the excess data already
-read.  When an input stream reads from a random-access file, ‘fflush’
-does clean the stream, but leaves the file pointer at an unpredictable
-place; you must set the file pointer before doing any further I/O.
-
-   Closing an output-only stream also does ‘fflush’, so this is a valid
-way of cleaning an output stream.
-
-   You need not clean a stream before using its descriptor for control
-operations such as setting terminal modes; these operations don’t affect
-the file position and are not affected by it.  You can use any
-descriptor for these operations, and all channels are affected
-simultaneously.  However, text already “output” to a stream but still
-buffered by the stream will be subject to the new terminal modes when
-subsequently flushed.  To make sure “past” output is covered by the
-terminal settings that were in effect at the time, flush the output
-streams for that terminal before setting the modes.  *Note Terminal
-Modes::.
 

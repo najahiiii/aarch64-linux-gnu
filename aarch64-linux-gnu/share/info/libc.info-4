@@ -1939,6 +1939,7 @@ START-INFO-DIR-ENTRY
 * ttyname: (libc)Is It a Terminal.
 * ttyname_r: (libc)Is It a Terminal.
 * twalk: (libc)Tree Search Function.
+* twalk_r: (libc)Tree Search Function.
 * tzset: (libc)Time Zone Functions.
 * ufromfp: (libc)Rounding Functions.
 * ufromfpf: (libc)Rounding Functions.
@@ -3997,7 +3998,69 @@ is an enumeration type.
      not modify the tree data, it is safe to run ‘twalk’ in more than
      one thread at the same time, working on the same tree.  It is also
      safe to call ‘tfind’ in parallel.  Functions which modify the tree
-     must not be used, otherwise the behavior is undefined.
+     must not be used, otherwise the behavior is undefined.  However, it
+     is difficult to pass data external to the tree to the callback
+     function without resorting to global variables (and thread safety
+     issues), so see the ‘twalk_r’ function below.
+
+ -- Function: void twalk_r (const void *ROOT, void (*ACTION) (const void
+          *KEY, VISIT WHICH, void *CLOSURE), void *CLOSURE)
+
+     Preliminary: | MT-Safe race:root | AS-Safe | AC-Safe | *Note POSIX
+     Safety Concepts::.
+
+     For each node in the tree with a node pointed to by ROOT, the
+     ‘twalk_r’ function calls the function provided by the parameter
+     ACTION.  For leaf nodes the function is called exactly once with
+     VALUE set to ‘leaf’.  For internal nodes the function is called
+     three times, setting the VALUE parameter or ACTION to the
+     appropriate value.  The CLOSURE parameter is passed down to each
+     call of the ACTION function, unmodified.
+
+     It is possible to implement the ‘twalk’ function on top of the
+     ‘twalk_r’ function, which is why there is no separate level
+     parameter.
+
+
+          #include <search.h>
+
+          struct twalk_with_twalk_r_closure
+          {
+            void (*action) (const void *, VISIT, int);
+            int depth;
+          };
+
+          static void
+          twalk_with_twalk_r_action (const void *nodep, VISIT which, void *closure0)
+          {
+            struct twalk_with_twalk_r_closure *closure = closure0;
+
+            switch (which)
+              {
+              case leaf:
+                closure->action (nodep, which, closure->depth);
+                break;
+              case preorder:
+                closure->action (nodep, which, closure->depth);
+                ++closure->depth;
+                break;
+              case postorder:
+                /* The preorder action incremented the depth. */
+                closure->action (nodep, which, closure->depth - 1);
+                break;
+              case endorder:
+                --closure->depth;
+                closure->action (nodep, which, closure->depth);
+                break;
+              }
+          }
+
+          void
+          twalk (const void *root, void (*action) (const void *, VISIT, int))
+          {
+            struct twalk_with_twalk_r_closure closure = { action, 0 };
+            twalk_r (root, twalk_with_twalk_r_action, &closure);
+          }
 
 
 File: libc.info,  Node: Pattern Matching,  Next: I/O Overview,  Prev: Searching and Sorting,  Up: Top

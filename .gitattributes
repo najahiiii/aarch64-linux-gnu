@@ -1,6 +1,0 @@
-libexec/gcc/aarch64-linux-gnu/9.0.1/lto1 filter=lfs diff=lfs merge=lfs -text
-bin/aarch64-linux-gnu-dwp filter=lfs diff=lfs merge=lfs -text
-bin/aarch64-linux-gnu-ld.gold filter=lfs diff=lfs merge=lfs -text
-aarch64-linux-gnu/bin/ld.gold filter=lfs diff=lfs merge=lfs -text
-libexec/gcc/aarch64-linux-gnu/9.0.1/cc1 filter=lfs diff=lfs merge=lfs -text
-aarch64-linux-gnu/lib64/libstdc++.a filter=lfs diff=lfs merge=lfs -text

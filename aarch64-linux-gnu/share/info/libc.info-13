@@ -1939,6 +1939,7 @@ START-INFO-DIR-ENTRY
 * ttyname: (libc)Is It a Terminal.
 * ttyname_r: (libc)Is It a Terminal.
 * twalk: (libc)Tree Search Function.
+* twalk_r: (libc)Tree Search Function.
 * tzset: (libc)Time Zone Functions.
 * ufromfp: (libc)Rounding Functions.
 * ufromfpf: (libc)Rounding Functions.
@@ -2074,6 +2075,90 @@ START-INFO-DIR-ENTRY
 * ynfNx: (libc)Special Functions.
 * ynl: (libc)Special Functions.
 END-INFO-DIR-ENTRY
+
+
+File: libc.info,  Node: Limits for Files,  Next: Options for Files,  Prev: Minimums,  Up: System Configuration
+
+32.6 Limits on File System Capacity
+===================================
+
+The POSIX.1 standard specifies a number of parameters that describe the
+limitations of the file system.  It’s possible for the system to have a
+fixed, uniform limit for a parameter, but this isn’t the usual case.  On
+most systems, it’s possible for different file systems (and, for some
+parameters, even different files) to have different maximum limits.  For
+example, this is very likely if you use NFS to mount some of the file
+systems from other machines.
+
+   Each of the following macros is defined in ‘limits.h’ only if the
+system has a fixed, uniform limit for the parameter in question.  If the
+system allows different file systems or files to have different limits,
+then the macro is undefined; use ‘pathconf’ or ‘fpathconf’ to find out
+the limit that applies to a particular file.  *Note Pathconf::.
+
+   Each parameter also has another macro, with a name starting with
+‘_POSIX’, which gives the lowest value that the limit is allowed to have
+on _any_ POSIX system.  *Note File Minimums::.
+
+ -- Macro: int LINK_MAX
+
+     The uniform system limit (if any) for the number of names for a
+     given file.  *Note Hard Links::.
+
+ -- Macro: int MAX_CANON
+
+     The uniform system limit (if any) for the amount of text in a line
+     of input when input editing is enabled.  *Note Canonical or Not::.
+
+ -- Macro: int MAX_INPUT
+
+     The uniform system limit (if any) for the total number of
+     characters typed ahead as input.  *Note I/O Queues::.
+
+ -- Macro: int NAME_MAX
+
+     The uniform system limit (if any) for the length of a file name
+     component, not including the terminating null character.
+
+     *Portability Note:* On some systems, the GNU C Library defines
+     ‘NAME_MAX’, but does not actually enforce this limit.
+
+ -- Macro: int PATH_MAX
+
+     The uniform system limit (if any) for the length of an entire file
+     name (that is, the argument given to system calls such as ‘open’),
+     including the terminating null character.
+
+     *Portability Note:* The GNU C Library does not enforce this limit
+     even if ‘PATH_MAX’ is defined.
+
+ -- Macro: int PIPE_BUF
+
+     The uniform system limit (if any) for the number of bytes that can
+     be written atomically to a pipe.  If multiple processes are writing
+     to the same pipe simultaneously, output from different processes
+     might be interleaved in chunks of this size.  *Note Pipes and
+     FIFOs::.
+
+   These are alternative macro names for some of the same information.
+
+ -- Macro: int MAXNAMLEN
+
+     This is the BSD name for ‘NAME_MAX’.  It is defined in ‘dirent.h’.
+
+ -- Macro: int FILENAME_MAX
+
+     The value of this macro is an integer constant expression that
+     represents the maximum length of a file name string.  It is defined
+     in ‘stdio.h’.
+
+     Unlike ‘PATH_MAX’, this macro is defined even if there is no actual
+     limit imposed.  In such a case, its value is typically a very large
+     number.  *This is always the case on GNU/Hurd systems.*
+
+     *Usage Note:* Don’t use ‘FILENAME_MAX’ as the size of an array in
+     which to store a file name!  You can’t possibly make an array that
+     big!  Use dynamic allocation (*note Memory Allocation::) instead.
 
 
 File: libc.info,  Node: Options for Files,  Next: File Minimums,  Prev: Limits for Files,  Up: System Configuration
@@ -15986,6 +16071,10 @@ const void *NEEDLE, size_t NEEDLE-LEN)’
 ‘void twalk (const void *ROOT, __action_fn_t ACTION)’
 
      ‘search.h’ (SVID): *note Tree Search Function::.
+
+‘void twalk_r (const void *ROOT, void (*ACTION) (const void *KEY, VISIT WHICH, void *CLOSURE), void *CLOSURE)’
+
+     ‘search.h’ (GNU): *note Tree Search Function::.
 
 ‘char * tzname [2]’
 

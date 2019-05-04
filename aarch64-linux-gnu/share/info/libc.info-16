@@ -1939,6 +1939,7 @@ START-INFO-DIR-ENTRY
 * ttyname: (libc)Is It a Terminal.
 * ttyname_r: (libc)Is It a Terminal.
 * twalk: (libc)Tree Search Function.
+* twalk_r: (libc)Tree Search Function.
 * tzset: (libc)Time Zone Functions.
 * ufromfp: (libc)Rounding Functions.
 * ufromfpf: (libc)Rounding Functions.
@@ -4530,6 +4531,8 @@ Function and Macro Index
 * ttyname_r:                             Is It a Terminal.    (line  37)
 * twalk:                                 Tree Search Function.
                                                               (line 138)
+* twalk_r:                               Tree Search Function.
+                                                              (line 162)
 * tzset:                                 Time Zone Functions. (line  32)
 * ufromfp:                               Rounding Functions.  (line 193)
 * ufromfpf:                              Rounding Functions.  (line 195)

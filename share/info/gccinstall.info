@@ -2058,6 +2058,18 @@ library.
      If none of these options are specified, the library is assumed in
      default locations.
 
+D-Specific Options
+------------------
+
+The following options apply to the build of the D runtime library.
+
+'--with-target-system-zlib'
+     Use installed 'zlib' rather than that included with GCC.  This
+     needs to be available for each multilib variant, unless configured
+     with '--with-target-system-zlib='auto'' in which case the
+     GCC included 'zlib' is only used when the system installed library
+     is not available.
+
 
 File: gccinstall.info,  Node: Building,  Next: Testing,  Prev: Configuration,  Up: Installing GCC
 
@@ -2216,6 +2228,12 @@ configurations are:
      optimizations.  Since the GCC middle end and back end are in
      'libbackend.a' this means that only the front end is actually LTO
      optimized.
+
+'bootstrap-lto-lean'
+     This option is similar to 'bootstrap-lto', but is intended for
+     faster build by only using LTO in the final bootstrap stage.  With
+     'make profiledbootstrap' the LTO frontend is trained only on
+     generator files.
 
 'bootstrap-debug'
      Verifies that the compiler generates the same executable code,
@@ -4707,97 +4725,97 @@ Ref: with-as32530
 Ref: with-gnu-ld33943
 Ref: WithAixSoname56340
 Ref: AixLdCommand57001
-Node: Building92716
-Node: Testing109040
-Node: Final install116927
-Node: Binaries122227
-Node: Specific123354
-Ref: aarch64-x-x123861
-Ref: alpha-x-x125881
-Ref: amd64-x-solaris210126290
-Ref: amdgcn-unknown-amdhsa126393
-Ref: arc-x-elf32126979
-Ref: arc-linux-uclibc127155
-Ref: arm-x-eabi127296
-Ref: avr127549
-Ref: bfin128130
-Ref: cr16128372
-Ref: cris128788
-Ref: dos129486
-Ref: epiphany-x-elf129809
-Ref: x-x-freebsd129914
-Ref: ft32-x-elf131714
-Ref: h8300-hms131812
-Ref: hppa-hp-hpux132164
-Ref: hppa-hp-hpux10134536
-Ref: hppa-hp-hpux11134949
-Ref: x-x-linux-gnu140351
-Ref: ix86-x-linux140544
-Ref: ix86-x-solaris210140857
-Ref: ia64-x-linux142202
-Ref: ia64-x-hpux142972
-Ref: x-ibm-aix143527
-Ref: TransferAixShobj147189
-Ref: iq2000-x-elf150999
-Ref: lm32-x-elf151139
-Ref: lm32-x-uclinux151243
-Ref: m32c-x-elf151371
-Ref: m32r-x-elf151473
-Ref: m68k-x-x151575
-Ref: m68k-x-uclinux152613
-Ref: microblaze-x-elf152858
-Ref: mips-x-x152977
-Ref: moxie-x-elf154887
-Ref: msp430-x-elf154934
-Ref: nds32le-x-elf155037
-Ref: nds32be-x-elf155109
-Ref: nvptx-x-none155178
-Ref: or1k-x-elf155741
-Ref: or1k-x-linux155872
-Ref: powerpc-x-x155953
-Ref: powerpc-x-darwin156144
-Ref: powerpc-x-elf156638
-Ref: powerpc-x-linux-gnu156723
-Ref: powerpc-x-netbsd156818
-Ref: powerpc-x-eabisim156906
-Ref: powerpc-x-eabi157032
-Ref: powerpcle-x-elf157108
-Ref: powerpcle-x-eabisim157200
-Ref: powerpcle-x-eabi157333
-Ref: rl78-x-elf157416
-Ref: riscv32-x-elf157522
-Ref: riscv32-x-linux157732
-Ref: riscv64-x-elf157910
-Ref: riscv64-x-linux158120
-Ref: rx-x-elf158298
-Ref: s390-x-linux158344
-Ref: s390x-x-linux158416
-Ref: s390x-ibm-tpf158503
-Ref: x-x-solaris2158634
-Ref: sparc-x-x162655
-Ref: sparc-sun-solaris2163157
-Ref: sparc-sun-solaris210164296
-Ref: sparc-x-linux164671
-Ref: sparc64-x-solaris2164702
-Ref: sparcv9-x-solaris2165035
-Ref: c6x-x-x165122
-Ref: tilegx-*-linux165214
-Ref: tilegxbe-*-linux165356
-Ref: tilepro-*-linux165499
-Ref: visium-x-elf165620
-Ref: x-x-vxworks165728
-Ref: x86-64-x-x167251
-Ref: x86-64-x-solaris210167579
-Ref: xtensa-x-elf168243
-Ref: xtensa-x-linux168914
-Ref: windows169255
-Ref: x-x-cygwin171096
-Ref: x-x-mingw32171649
-Ref: older171875
-Ref: elf173992
-Node: Old174250
-Node: Configurations177383
-Node: GNU Free Documentation License180921
-Node: Concept Index206049
+Node: Building93150
+Node: Testing109724
+Node: Final install117611
+Node: Binaries122911
+Node: Specific124038
+Ref: aarch64-x-x124545
+Ref: alpha-x-x126565
+Ref: amd64-x-solaris210126974
+Ref: amdgcn-unknown-amdhsa127077
+Ref: arc-x-elf32127663
+Ref: arc-linux-uclibc127839
+Ref: arm-x-eabi127980
+Ref: avr128233
+Ref: bfin128814
+Ref: cr16129056
+Ref: cris129472
+Ref: dos130170
+Ref: epiphany-x-elf130493
+Ref: x-x-freebsd130598
+Ref: ft32-x-elf132398
+Ref: h8300-hms132496
+Ref: hppa-hp-hpux132848
+Ref: hppa-hp-hpux10135220
+Ref: hppa-hp-hpux11135633
+Ref: x-x-linux-gnu141035
+Ref: ix86-x-linux141228
+Ref: ix86-x-solaris210141541
+Ref: ia64-x-linux142886
+Ref: ia64-x-hpux143656
+Ref: x-ibm-aix144211
+Ref: TransferAixShobj147873
+Ref: iq2000-x-elf151683
+Ref: lm32-x-elf151823
+Ref: lm32-x-uclinux151927
+Ref: m32c-x-elf152055
+Ref: m32r-x-elf152157
+Ref: m68k-x-x152259
+Ref: m68k-x-uclinux153297
+Ref: microblaze-x-elf153542
+Ref: mips-x-x153661
+Ref: moxie-x-elf155571
+Ref: msp430-x-elf155618
+Ref: nds32le-x-elf155721
+Ref: nds32be-x-elf155793
+Ref: nvptx-x-none155862
+Ref: or1k-x-elf156425
+Ref: or1k-x-linux156556
+Ref: powerpc-x-x156637
+Ref: powerpc-x-darwin156828
+Ref: powerpc-x-elf157322
+Ref: powerpc-x-linux-gnu157407
+Ref: powerpc-x-netbsd157502
+Ref: powerpc-x-eabisim157590
+Ref: powerpc-x-eabi157716
+Ref: powerpcle-x-elf157792
+Ref: powerpcle-x-eabisim157884
+Ref: powerpcle-x-eabi158017
+Ref: rl78-x-elf158100
+Ref: riscv32-x-elf158206
+Ref: riscv32-x-linux158416
+Ref: riscv64-x-elf158594
+Ref: riscv64-x-linux158804
+Ref: rx-x-elf158982
+Ref: s390-x-linux159028
+Ref: s390x-x-linux159100
+Ref: s390x-ibm-tpf159187
+Ref: x-x-solaris2159318
+Ref: sparc-x-x163339
+Ref: sparc-sun-solaris2163841
+Ref: sparc-sun-solaris210164980
+Ref: sparc-x-linux165355
+Ref: sparc64-x-solaris2165386
+Ref: sparcv9-x-solaris2165719
+Ref: c6x-x-x165806
+Ref: tilegx-*-linux165898
+Ref: tilegxbe-*-linux166040
+Ref: tilepro-*-linux166183
+Ref: visium-x-elf166304
+Ref: x-x-vxworks166412
+Ref: x86-64-x-x167935
+Ref: x86-64-x-solaris210168263
+Ref: xtensa-x-elf168927
+Ref: xtensa-x-linux169598
+Ref: windows169939
+Ref: x-x-cygwin171780
+Ref: x-x-mingw32172333
+Ref: older172559
+Ref: elf174676
+Node: Old174934
+Node: Configurations178067
+Node: GNU Free Documentation License181605
+Node: Concept Index206733
 
 End Tag Table
