@@ -25,7 +25,7 @@ sudo apt install git-lfs
 | :-: | :-: | :-: | :-: | :-: | - | :-: |
 | 01/03/2019 | GNU (GCC) | ARM64 | 4.9.4 | [GCC 4.9.4 - 20190301](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc4.9.4-20190301) | `git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc4.9.4-20190301` | Error |
 | 14/03/2019 | GNU (GCC) | ARM64 | 5.5.0 | [GCC 5.5.0 - 20190314](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc5-20190314) | `git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc5-20190314` | Error |
-| 01/04/2019 | GNU (GCC) | ARM64 | 9.0.1 | [GCC 9.0.1 - 20190401](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190401) | `git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc9-20190401` | Error |
+| 04/05/2019 | GNU (GCC) | ARM64 | 9.1.0 | [GCC 9.1.0 - 20190504](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc9-20190401) | `git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc9-20190401` | Fine |
 | 23/01/2015 | GNU (GCC) | ARM64 | 4.9.x | [GCC 4.9.x - Prerelease Mirror](https://github.com/najahiiii/aarch64-linux-gnu/tree/4.9-mirror) | `git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b 4.9-mirror` | Fine |
 | 03/03/2019 | GNU (GCC) | ARM64 | 8.3.x | [GCC 8.3.x - GNU Toolchain for the Cortex-A Family 2019.03](https://github.com/najahiiii/aarch64-linux-gnu/tree/gcc8-201903-A) | `git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc8-201903-A` | Fine |
 
